@@ -1,0 +1,30 @@
+{
+    "name": "neo-framework/neo-core",
+    "description": "Core components from Neo Framework",
+    "authors":
+    [
+        {
+            "name": "YouniS Bensalah",
+            "email": "younis.bensalah@gmail.com",
+            "homepage": "http://younishd.fr"
+        }
+    ],
+    "require":
+    {
+        "php": ">=5.6.0",
+        "klein/klein": "dev-master",
+        "pimple/pimple": "^3.0@dev",
+        "phpmailer/phpmailer": "dev-master",
+        "younishd/endobox": "dev-master",
+        "katzgrau/klogger": "dev-master",
+        "psr/log": "^1.0"
+    },
+    "minimum-stability": "dev",
+    "autoload":
+    {
+        "psr-4":
+        {
+            "Neo\\": "src/Neo/"
+        }
+    }
+}
