@@ -1,3 +1,3 @@
-# Neo Framework Core
+# neo-core
 
 Core components from Neo Framework
