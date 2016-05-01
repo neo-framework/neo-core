@@ -1,6 +1,7 @@
 {
     "name": "neo-framework/neo-core",
     "description": "Core components from Neo Framework",
+    "license": "MIT",
     "authors":
     [
         {
