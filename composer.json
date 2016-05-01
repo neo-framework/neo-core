@@ -24,7 +24,7 @@
     {
         "psr-4":
         {
-            "Neo\\": "src/Neo/"
+            "neo\\": "src/neo/"
         }
     }
 }
