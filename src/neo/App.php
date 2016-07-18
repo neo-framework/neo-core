@@ -20,6 +20,8 @@ class App
 
     private $container;
 
+    private $router;
+
     public static function get($rootdir)
     {
         return new static($rootdir, new Container());
@@ -34,6 +36,7 @@ class App
 
         $this->container = $container;
 
+        // create container instance and register services
         if (!file_exists($services_config_file = $this->rootdir . '/config/services.config.php')) {
             throw new \InvalidArgumentException(
                 sprintf('Services config file (%s) does not exist.', $services_config_file));
@@ -41,6 +44,12 @@ class App
         $services = require $services_config_file;
         foreach ($services['services'] as $serv => $closure) {
             $this->container[$serv] = $closure;
+        }
+
+        // get router instance and register routes
+        $this->router = $this->container['neo/router'];
+        foreach ($this->container['config']['routes'] as $r => $x) {
+            $this->router->map($x['method'], $r, $x['action'], $x['controller']);
         }
     }
 
@@ -51,12 +60,10 @@ class App
         $debug = (bool)$config['global']['debug'];
         date_default_timezone_set($config['global']['timezone']);
 
-        $router = $this->container['neo/router'];
-
         try {
             try {
 
-                echo $router->dispatch();
+                echo $this->router->dispatch();
 
             } catch (\Klein\Exceptions\UnhandledException $e) {
                 throw new CoreException($e->getMessage());
