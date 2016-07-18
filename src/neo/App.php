@@ -34,12 +34,12 @@ class App
 
         $this->container = $container;
 
-        if (!file_exists($services_config_file = $this->rootdir . 'config/services.config.php')) {
+        if (!file_exists($services_config_file = $this->rootdir . '/config/services.config.php')) {
             throw new \InvalidArgumentException(
                 sprintf('Services config file (%s) does not exist.', $services_config_file));
         }
         $services = require $services_config_file;
-        foreach ($services as $serv => $closure) {
+        foreach ($services['services'] as $serv => $closure) {
             $this->container[$serv] = $closure;
         }
     }
