@@ -50,8 +50,6 @@ class Router
         $cf = $this->controller_factory;
 
         $this->klein->respond($method, $route, function ($request) use ($cf, $action, $controller) {
-            $controller .= 'Controller';
-            $action .= '_action';
             $c = $cf->factor($controller, [$request]);
             return $c->$action();
         });
