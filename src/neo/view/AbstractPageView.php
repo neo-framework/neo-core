@@ -8,8 +8,11 @@
  * @license MIT
  */
 
-namespace neo\exception;
+namespace neo\view;
 
-class CoreException extends \Exception
+abstract class AbstractPageView
 {
+
+
+
 }
