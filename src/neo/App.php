@@ -58,6 +58,8 @@ class App
         $config = $this->container['config'];
 
         $debug = (bool)$config['global']['debug'];
+        error_reporting($debug ? -1 : 0);
+
         date_default_timezone_set($config['global']['timezone']);
 
         try {
