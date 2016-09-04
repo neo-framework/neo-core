@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "76800d309de9222874a968ca15a1a8d8",
-    "content-hash": "5f4dd567e8b54100135741095dfe3082",
+    "hash": "7d84634697b8ea00148e07d9efb2be57",
+    "content-hash": "90a94711e33dc904707d2fba43aa2af7",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -202,12 +202,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "d9412709509945bcc94951bbf28f5157546a1316"
+                "reference": "7c1154b63cf729e8cb5daac5c7a3c23883dde8fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/d9412709509945bcc94951bbf28f5157546a1316",
-                "reference": "d9412709509945bcc94951bbf28f5157546a1316",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/7c1154b63cf729e8cb5daac5c7a3c23883dde8fb",
+                "reference": "7c1154b63cf729e8cb5daac5c7a3c23883dde8fb",
                 "shasum": ""
             },
             "require": {
@@ -254,7 +254,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2016-08-10 19:00:56"
+            "time": "2016-08-29 13:22:56"
         },
         {
             "name": "pimple/pimple",
@@ -1594,12 +1594,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "91aab601eec635b9c06232a6b0a05cdd251d34f8"
+                "reference": "aa8be2235b5dd4e472424552390609f61996f5ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/91aab601eec635b9c06232a6b0a05cdd251d34f8",
-                "reference": "91aab601eec635b9c06232a6b0a05cdd251d34f8",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/aa8be2235b5dd4e472424552390609f61996f5ab",
+                "reference": "aa8be2235b5dd4e472424552390609f61996f5ab",
                 "shasum": ""
             },
             "require": {
@@ -1641,7 +1641,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-08-27 16:29:21"
+            "time": "2016-09-02 02:14:06"
         },
         {
             "name": "webmozart/assert",

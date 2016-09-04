@@ -1,12 +1,10 @@
 {
     "name": "neo-framework/neo-core",
     "description": "Core components from Neo Framework",
+    "version": "0.0.1-dev",
+    "type": "library",
     "homepage": "https://neo-framework.github.io",
-    "keywords":
-    [
-        "framework",
-        "neo"
-    ],
+    "keywords": ["framework", "neo"],
     "license": "MIT",
     "authors":
     [
@@ -33,9 +31,6 @@
     },
     "autoload":
     {
-        "psr-4":
-        {
-            "neo\\": "src/neo/"
-        }
+        "psr-4": {"neo\\": "src/neo/"}
     }
 }
