@@ -41,7 +41,7 @@ class Router
     /**
      * Map an http method and route to an action and controller.
      */
-    public function map($method, $route, $action, $controller)
+    public function map(string $method, string $route, string $action, string $controller)
     {
         // alias
         $cf = $this->controller_factory;
