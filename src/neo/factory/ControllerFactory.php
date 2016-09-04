@@ -10,28 +10,24 @@
 
 namespace neo\factory;
 
-use \neo\exception\CoreException;
-
 /**
  * Controller factory.
  */
-class ControllerFactory implements FactoryInterface
+class ControllerFactory implements Factory
 {
 
-    public function factor($classname, array $args = null)
+    public function make(string $classname, array $args = null)
     {
-        if (!class_exists($classname)) {
-            throw new CoreException(sprintf('Could not instantiate controller: Class %s does not exist.', $classname));
+        if (!\class_exists($classname)) {
+            throw new \RuntimeException(\sprintf(
+                'Could not instantiate controller: Class "%s" does not exist.', $classname));
         }
 
         if (!isset($args[0])) {
-            throw new CoreException('Could not instantiate controller: Missing request argument.');
+            throw new \RuntimeException('Could not instantiate controller: Missing request argument.');
         }
-        $request = $args[0];
 
-        $c = new $classname($request);
-
-        return $c;
+        return new $classname($args[0]);
     }
 
 }

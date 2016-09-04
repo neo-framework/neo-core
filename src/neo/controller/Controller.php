@@ -12,7 +12,7 @@ namespace neo\controller;
 
 use \Klein\Request;
 
-abstract class AbstractController
+abstract class Controller
 {
 
     private $request;

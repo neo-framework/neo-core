@@ -13,12 +13,12 @@ namespace neo\factory;
 /**
  * Factory interface.
  */
-interface FactoryInterface
+interface Factory
 {
 
     /**
      * Return the requested instance.
      */
-    public function factor($classname, array $args = null);
+    public function make(string $classname, array $args = null);
 
 }

@@ -8,8 +8,14 @@
  * @license MIT
  */
 
-namespace neo\exception;
+namespace neo\view;
 
-class CoreException extends \Exception
+/**
+ * View interface.
+ */
+interface View
 {
+
+    public function display() : string;
+
 }

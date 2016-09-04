@@ -11,8 +11,7 @@
 namespace neo\router;
 
 use \Klein\Klein;
-use \neo\factory\FactoryInterface as Factory;
-use \neo\exception\CoreException;
+use \neo\factory\Factory;
 
 /**
  * The Router forwards queries to the right controller.
@@ -36,9 +35,6 @@ class Router
      */
     public function dispatch()
     {
-        $this->klein->onHttpError(function ($code) {
-            throw new CoreException('HTTP Error ' . $code);
-        });
         $this->klein->dispatch();
     }
 
@@ -47,10 +43,11 @@ class Router
      */
     public function map($method, $route, $action, $controller)
     {
+        // alias
         $cf = $this->controller_factory;
 
         $this->klein->respond($method, $route, function ($request) use ($cf, $action, $controller) {
-            $c = $cf->factor($controller, [$request]);
+            $c = $cf->make($controller, [$request]);
             return $c->$action();
         });
     }
