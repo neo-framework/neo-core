@@ -17,7 +17,6 @@
     "minimum-stability": "dev",
     "require":
     {
-        "php": "^7.0",
         "klein/klein": "dev-master",
         "pimple/pimple": "^3.0@dev",
         "phpmailer/phpmailer": "dev-master",
