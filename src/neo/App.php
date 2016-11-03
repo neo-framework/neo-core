@@ -52,7 +52,7 @@ class App
             throw new \RuntimeException('Service "neo/router" not registered.');
         }
         $this->router = $this->container['neo/router'];
-        foreach ($this->container['config']['routes'] as $r => &$x) {
+        foreach ($this->container['config']['routes'] as $r => $x) {
             $this->router->map($x['method'], $r, $x['action'], $x['controller']);
         }
     }
