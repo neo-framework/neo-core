@@ -35,7 +35,7 @@ class App
 
         $this->container = $container;
 
-        // create container instance and register services
+        // register services
         if (!\file_exists($services_config_file = $this->rootdir . '/config/services.config.php')) {
             throw new \RuntimeException(\sprintf('Services config file "%s" does not exist.', $services_config_file));
         }
