@@ -37,6 +37,9 @@ class App
 
         $this->container = $container;
 
+        // register root directory
+        $this->container['root_dir'] = $this->rootdir;
+
         // register default services
         if (!\file_exists($services_config_file = __DIR__ . '/config/services.config.php')) {
             throw new \RuntimeException(
@@ -51,16 +54,14 @@ class App
         }
 
         // register user-land services (if any)
-        if (!\file_exists($userland_services_file = $this->rootdir . '/config/services.config.php')) {
-            throw new \RuntimeException(
-                \sprintf('User-land services config file "%s" does not exist.', $userland_services_file));
-        }
-        $userland_services = require $userland_services_file;
-        if (!isset($userland_services['services'])) {
-            throw new \RuntimeException('User-land services config file does not contain "services" section.');
-        }
-        foreach ($userland_services['services'] as $serv => $closure) {
-            $this->container[$serv] = $closure;
+        if (\file_exists($userland_services_file = $this->rootdir . '/config/services.config.php')) {
+            $userland_services = require $userland_services_file;
+            if (!isset($userland_services['services'])) {
+                throw new \RuntimeException('User-land services config file does not contain "services" section.');
+            }
+            foreach ($userland_services['services'] as $serv => $closure) {
+                $this->container[$serv] = $closure;
+            }
         }
 
         // require mandatory services

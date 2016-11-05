@@ -37,21 +37,17 @@ return [
             $config = [];
             foreach (new DirectoryIterator(__DIR__) as $f) {
                 if ($f->isFile() && $f->getExtension() === 'php' && $f->getFilename() !== 'services.config.php') {
-                    $c = require $f->getPathname();
-                    $config = array_merge($config, $c);
+                    $cfg = require $f->getPathname();
+                    $config = array_merge($config, $cfg);
                 }
-            }
-
-            if (!defined('ROOT_DIR')) {
-                return $config;
             }
 
             // read userland config
             $userconfig = [];
-            foreach (new DirectoryIterator(ROOT_DIR . '/config') as $f) {
+            foreach (new DirectoryIterator($c['root_dir'] . '/config') as $f) {
                 if ($f->isFile() && $f->getExtension() === 'php' && $f->getFilename() !== 'services.config.php') {
-                    $c = require $f->getPathname();
-                    $userconfig = array_merge($userconfig, $c);
+                    $cfg = require $f->getPathname();
+                    $userconfig = array_merge($userconfig, $cfg);
                 }
             }
 
