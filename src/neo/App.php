@@ -69,7 +69,7 @@ class App
         // container shortcuts
         $this->router = $this->container['router'];
         $this->config = $this->container['config'];
-        
+
         // register routes
         foreach ($this->config['routes'] as $r => $x) {
             $this->router->map($x['method'], $r, $x['action'], $x['controller']);
@@ -98,7 +98,7 @@ class App
     public static function format_exception(\Exception $e)
     {
         $format = <<<'EOT'
-<body style='background:#000;color:#d9f097;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;'>
+<body style='background:#171e26;color:#d9f097;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;'>
 <h1>%s</h1>
 <p><strong>%s</strong></p>
 <pre>%s</pre>
