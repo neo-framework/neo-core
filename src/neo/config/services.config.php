@@ -27,41 +27,63 @@ return [
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                     ]);
             } catch (PDOException $e) {
-                throw new neo\exceptions\CoreException(
-                    sprintf('PDOException: (%s) %s', $e->getCode(), $e->getMessage()));
+                throw new RuntimeException($e->getMessage());
             }
             return $pdo;
         },
 
         'config' => function ($c) {
-            $global = require __DIR__ . '/global.config.php';
-            $mysql = require __DIR__ . '/mysql.config.php';
-            $routes = require __DIR__ . '/routes.config.php';
-            return array_merge($global, $mysql, $routes);
+            // read default config
+            $config = [];
+            foreach (new DirectoryIterator(__DIR__) as $f) {
+                if ($f->isFile() && $f->getExtension() === 'php' && $f->getFilename() !== 'services.config.php') {
+                    $c = require $f->getPathname();
+                    $config = array_merge($config, $c);
+                }
+            }
+
+            if (!defined('ROOT_DIR')) {
+                return $config;
+            }
+
+            // read userland config
+            $userconfig = [];
+            foreach (new DirectoryIterator(ROOT_DIR . '/config') as $f) {
+                if ($f->isFile() && $f->getExtension() === 'php' && $f->getFilename() !== 'services.config.php') {
+                    $c = require $f->getPathname();
+                    $userconfig = array_merge($userconfig, $c);
+                }
+            }
+
+            // merge configs
+            foreach ($userconfig as $k => $v) {
+                if (!isset($config[$k])) {
+                    $config[$k] = [];
+                }
+                $config[$k] = array_merge($config[$k], $userconfig[$k]);
+            }
+
+            return $config;
         },
 
-        'neo/router' => function ($c) {
-            return new neo\router\Router($c['vendor/klein'], $c['neo/controller_factory']);
+        'router' => function ($c) {
+            return new neo\router\Router($c['klein'], $c['controller_factory']);
         },
 
-        'neo/controller_factory' => function ($c) {
+        'controller_factory' => function ($c) {
             return new neo\factory\ControllerFactory();
         },
 
-        'neo/view_factory' => function ($c) {
+        'view_factory' => function ($c) {
             // TODO
         },
 
-        'neo/model_factory' => function ($c) {
+        'model_factory' => function ($c) {
             // TODO
         },
 
-        'vendor/klein' => function ($c) {
+        'klein' => function ($c) {
             return new Klein\Klein();
-        },
-
-        'vendor/endobox' => function ($c) {
-            return endobox\endobox::get();
         }
 
     ]
