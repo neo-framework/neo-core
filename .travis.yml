@@ -1,0 +1,16 @@
+language: php
+
+php:
+    - '7.0'
+    - nightly
+    - hhvm
+
+before_script: composer install --no-dev --ignore-platform-reqs
+
+script: phpunit --bootstrap vendor/autoload.php tests
+
+matrix:
+    fast-finish: true
+    allow_failures:
+        - php: nightly
+        - php: hhvm
