@@ -66,9 +66,10 @@ class App
         // require mandatory services
         $this->require_services([ 'router', 'config' ]);
 
+        // container shortcuts
         $this->router = $this->container['router'];
         $this->config = $this->container['config'];
-
+        
         // register routes
         foreach ($this->config['routes'] as $r => $x) {
             $this->router->map($x['method'], $r, $x['action'], $x['controller']);
