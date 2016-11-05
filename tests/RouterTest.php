@@ -20,16 +20,16 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
     protected function setUp()
     {
         // create a controller mock
-        $controller_mock = $this->getMockBuilder('\\neo\\controller\\AbstractController')
+        $controller_mock = $this->getMockBuilder('\\neo\\controller\\Controller')
             ->setMethods(['foo_action'])
             ->disableOriginalConstructor()
             ->getMock();
         $controller_mock->method('foo_action')
             ->willReturn("Hellowz");
         // create a controller factory mock that returns the controller
-        $factory_mock = $this->getMockBuilder('\\neo\\factory\\FactoryInterface')
+        $factory_mock = $this->getMockBuilder('\\neo\\factory\\Factory')
             ->getMock();
-        $factory_mock->method('factor')
+        $factory_mock->method('make')
             ->willReturn($controller_mock);
         // create router
         $this->router = new Router(new Klein(), $factory_mock);
@@ -38,7 +38,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
     public function testSimpleRequest()
     {
         // map GET /test to Bar::foo()
-        $this->router->map('GET', '/test', 'foo', 'Bar');
+        $this->router->map('GET', '/test', 'foo_action', 'BarController');
 
         // lel
         $_SERVER['REQUEST_URI'] = '/test';
