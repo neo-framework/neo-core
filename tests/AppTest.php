@@ -14,17 +14,24 @@ use \neo\App;
 
 class AppTest extends \PHPUnit_Framework_TestCase {
 
-    protected $app;
-
-    protected function setUp()
-    {
-        $this->app = App::instance(__DIR__ . '/resources/testroot');
-    }
-
     public function testTimezone()
     {
-        $this->app->run();
+        App::instance(__DIR__ . '/resources/testroot')->run();
         $this->assertSame('Europe/Copenhagen', \date_default_timezone_get());
+    }
+
+    public function testInvalidRootdirException()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageRegExp('/Root directory .* does not exist/');
+        App::instance(__DIR__ . '/resources/doesntexist');
+    }
+
+    public function testMissingServicesException()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageRegExp('/does not contain .* section/');
+        App::instance(__DIR__ . '/resources/missingservicesroot');
     }
 
 }
