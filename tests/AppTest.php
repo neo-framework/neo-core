@@ -34,4 +34,37 @@ class AppTest extends TestCase
         App::instance(__DIR__ . '/resources/missingservicesroot');
     }
 
+    public function testDefaultRouteKeys()
+    {
+        $app = App::instance(__DIR__ . '/resources/defaultrootkeys');
+        $r = new ReflectionObject($app);
+        $p = $r->getProperty('container');
+        $p->setAccessible(true);
+        $c = $p->getValue($app);
+
+        $this->assertEquals([
+            'method' => 'POST',
+            'action' => 'a_action',
+            'controller' => 'AController'
+        ], $c['config']['routes']['/a']);
+        
+        $this->assertEquals([
+            'method' => 'GET',
+            'action' => 'b_action',
+            'controller' => 'BController'
+        ], $c['config']['routes']['/b']);
+
+        $this->assertEquals([
+            'method' => 'POST',
+            'action' => 'index_action',
+            'controller' => 'CController'
+        ], $c['config']['routes']['/c']);
+
+        $this->assertEquals([
+            'method' => 'GET',
+            'action' => 'index_action',
+            'controller' => 'DController'
+        ], $c['config']['routes']['/d']);
+    }
+
 }

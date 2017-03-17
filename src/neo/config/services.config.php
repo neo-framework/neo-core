@@ -38,6 +38,17 @@ return [
                 $config[$k] = array_merge($config[$k], $userconfig[$k]);
             }
 
+            // default route keys
+            foreach ($config['routes'] as &$r) {
+                if (!isset($r['method'])) {
+                    $r['method'] = 'GET';
+                }
+
+                if (!isset($r['action'])) {
+                    $r['action'] = 'index_action';
+                }
+            }
+
             return $config;
         },
 
