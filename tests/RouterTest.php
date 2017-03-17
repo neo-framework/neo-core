@@ -30,7 +30,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         // create a controller factory mock that returns the controller
         $factory_mock = $this->getMockBuilder('\\neo\\factory\\Factory')
             ->getMock();
-        $factory_mock->method('make')
+        $factory_mock->method('__invoke')
             ->willReturn($controller_mock);
         // create router
         $this->router = new Router(new Klein(), $factory_mock);
