@@ -19,9 +19,6 @@
     {
         "klein/klein": "dev-master",
         "pimple/pimple": "^3.0@dev",
-        "phpmailer/phpmailer": "dev-master",
-        "katzgrau/klogger": "dev-master",
-        "psr/log": "^1.0",
         "younishd/endobox": "^2.1"
     },
     "require-dev":
