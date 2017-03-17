@@ -53,6 +53,10 @@ return [
             return new Klein\Klein();
         },
 
+        'endobox' => function ($c) {
+            return new endobox\Factory($c['root_dir'] . '/templates');
+        },
+
         'database_connection' => function ($c) {
             $config = $c['config']['mysql'];
             try {
