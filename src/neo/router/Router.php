@@ -4,7 +4,7 @@
  * Neo Framework
  *
  * @link https://neo-framework.github.io
- * @copyright Copyright (c) 2016 YouniS Bensalah <younis.bensalah@gmail.com>
+ * @copyright Copyright (c) 2016-2017 YouniS Bensalah <younis.bensalah@gmail.com>
  * @license MIT
  */
 
@@ -46,9 +46,10 @@ class Router
         // alias
         $cf = $this->controller_factory;
 
-        $this->klein->respond($method, $route, function ($request) use ($cf, $action, $controller) {
-            $c = $cf->make($controller, [$request]);
-            return $c->$action();
+        $this->klein->respond($method, $route, function ($request, $response) use (&$cf, $action, $controller) {
+
+            return $cf($controller, [ $request, $response ])->$action();
+
         });
     }
 
