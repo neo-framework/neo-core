@@ -8,12 +8,11 @@
  * @license MIT
  */
 
-namespace neo\tests;
-
+use \PHPUnit\Framework\TestCase;
 use \neo\router\Router;
 use \Klein\Klein;
 
-class RouterTest extends \PHPUnit_Framework_TestCase
+class RouterTest extends TestCase
 {
 
     protected $router;
