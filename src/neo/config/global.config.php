@@ -4,7 +4,7 @@
  * Neo Framework
  *
  * @link https://neo-framework.github.io
- * @copyright Copyright (c) 2016 YouniS Bensalah <younis.bensalah@gmail.com>
+ * @copyright Copyright (c) 2016-2017 YouniS Bensalah <younis.bensalah@gmail.com>
  * @license MIT
  */
 
@@ -15,7 +15,8 @@ return [
         'logging' => true,
         'log_file' => 'log/neo.log',
         'log_level' => 'DEBUG',
-        'debug' => true
+        'debug' => true,
+        'app_ns' => 'myapp'
 
     ]
 ];

@@ -4,33 +4,12 @@
  * Neo Framework
  *
  * @link https://neo-framework.github.io
- * @copyright Copyright (c) 2016 YouniS Bensalah <younis.bensalah@gmail.com>
+ * @copyright Copyright (c) 2016-2017 YouniS Bensalah <younis.bensalah@gmail.com>
  * @license MIT
  */
 
 return [
     'services' => [
-
-        'database_connection' => function ($c) {
-            $config = $c['config']['mysql'];
-            try {
-                $pdo = new PDO(
-                    sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s',
-                        $config['host'],
-                        $config['port'],
-                        $config['dbname'],
-                        $config['charset']),
-                    $config['username'],
-                    $config['password'],
-                    [
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-                    ]);
-            } catch (PDOException $e) {
-                throw new RuntimeException($e->getMessage());
-            }
-            return $pdo;
-        },
 
         'config' => function ($c) {
             // read default config
@@ -67,19 +46,32 @@ return [
         },
 
         'controller_factory' => function ($c) {
-            return new neo\factory\ControllerFactory();
+            return new neo\factory\ControllerFactory($c);
         },
 
-        'view_factory' => function ($c) {
-            // TODO
-        },
-
-        'model_factory' => function ($c) {
-            // TODO
-        },
-
-        'klein' => function ($c) {
+        'klein' => function () {
             return new Klein\Klein();
+        },
+
+        'database_connection' => function ($c) {
+            $config = $c['config']['mysql'];
+            try {
+                $pdo = new PDO(
+                    sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s',
+                        $config['host'],
+                        $config['port'],
+                        $config['dbname'],
+                        $config['charset']),
+                    $config['username'],
+                    $config['password'],
+                    [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                    ]);
+            } catch (PDOException $e) {
+                throw new RuntimeException($e->getMessage());
+            }
+            return $pdo;
         }
 
     ]
