@@ -28,5 +28,9 @@
     "autoload":
     {
         "psr-4": {"neo\\": "src/neo/"}
+    },
+    "autoload-dev":
+    {
+        "psr-4": {"testapp\\": "tests/testapp/src/testapp/"}
     }
 }
