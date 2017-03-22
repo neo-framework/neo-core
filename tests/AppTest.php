@@ -47,7 +47,7 @@ class AppTest extends TestCase
             'action' => 'a_action',
             'controller' => 'AController'
         ], $c['config']['routes']['/a']);
-        
+
         $this->assertEquals([
             'method' => 'GET',
             'action' => 'b_action',
@@ -65,6 +65,12 @@ class AppTest extends TestCase
             'action' => 'index_action',
             'controller' => 'DController'
         ], $c['config']['routes']['/d']);
+    }
+
+    public function testExampleApp()
+    {
+        $this->expectOutputString("hello");
+        App::instance(__DIR__ . '/testapp')->run('/testapp');
     }
 
 }

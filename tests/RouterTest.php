@@ -40,11 +40,8 @@ class RouterTest extends TestCase
         // map GET /test to Bar::foo()
         $this->router->map('GET', '/test', 'foo_action', 'BarController');
 
-        // lel
-        $_SERVER['REQUEST_URI'] = '/test';
-
         $this->expectOutputString("Hellowz");
-        $this->router->dispatch();
+        $this->router->dispatch('/test');
     }
 
 }
