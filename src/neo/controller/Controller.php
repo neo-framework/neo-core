@@ -62,7 +62,7 @@ abstract class Controller
       */
      public function model(string $modelname) : Model
      {
-         return $this->model_factory($modelname);
+         return ($this->model_factory)($modelname);
      }
 
 }
