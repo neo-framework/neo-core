@@ -14,6 +14,8 @@ use \Klein\Request;
 use \Klein\Response;
 use \endobox\Factory as Endobox;
 use \endobox\Box;
+use \neo\factory\ModelFactory;
+use \neo\model\Model;
 
 abstract class Controller
 {
@@ -24,11 +26,14 @@ abstract class Controller
 
     protected $view;
 
-    public function __construct(Request $request, Response $response, Endobox $endobox)
+    private $model_factory;
+
+    public function __construct(Request $request, Response $response, Endobox $endobox, ModelFactory $mf)
     {
         $this->request = $request;
         $this->response = $response;
         $this->view = $endobox;
+        $this->model_factory = $mf;
     }
 
     /**
@@ -50,6 +55,14 @@ abstract class Controller
      public function view(string $template) : Box
      {
          return ($this->view)($template);
+     }
+
+     /**
+      * Get model instance by class name.
+      */
+     public function model(string $modelname) : Model
+     {
+         return $this->model_factory($modelname);
      }
 
 }

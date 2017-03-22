@@ -60,6 +60,10 @@ return [
             return new neo\factory\ControllerFactory($c);
         },
 
+        'model_factory' => function ($c) {
+            return new neo\factory\ModelFactory($c);
+        },
+
         'klein' => function () {
             return new Klein\Klein();
         },

@@ -11,6 +11,7 @@
 namespace neo\router;
 
 use \Klein\Klein;
+use \Klein\Request;
 use \neo\factory\Factory;
 
 /**
@@ -33,9 +34,15 @@ class Router
     /**
      * Find a matching route for the request and run it.
      */
-    public function dispatch()
+    public function dispatch(string $request = null)
     {
-        $this->klein->dispatch();
+        if ($request !== null) {
+            $server = $_SERVER;
+            $server['REQUEST_URI'] = $request;
+            $this->klein->dispatch(new Request($_GET, $_POST, $_COOKIE, $server, $_FILES));
+        } else {
+            $this->klein->dispatch();
+        }
     }
 
     /**

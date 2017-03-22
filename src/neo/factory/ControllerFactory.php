@@ -36,7 +36,7 @@ class ControllerFactory extends ContainerAwareFactory
             throw new \RuntimeException('Could not instantiate controller: Expected args[1] to be of type Response.');
         }
 
-        return new $classname($args[0], $args[1], $this->container['endobox']);
+        return new $classname($args[0], $args[1], $this->container['endobox'], $this->container['model_factory']);
     }
 
 }

@@ -77,7 +77,10 @@ class App
         }
     }
 
-    public function run()
+    /**
+     * Run the application with an optional request.
+     */
+    public function run(string $request = null)
     {
         $debug = (bool)$this->config['global']['debug'];
         \error_reporting($debug ? -1 : 0);
@@ -86,7 +89,7 @@ class App
         try {
             try {
 
-                echo $this->router->dispatch();
+                echo $this->router->dispatch($request);
 
             } catch (\Klein\Exceptions\UnhandledException $e) {
                 throw new \RuntimeException($e->getMessage());
