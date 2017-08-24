@@ -10,6 +10,8 @@
 
 namespace neo\core\controller;
 
+use \neo\core\factory\ControllerFactory;
+
 abstract class Plugin
 {
 
