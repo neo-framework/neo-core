@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace neo\factory;
+namespace neo\core\factory;
 
 /**
  * This is the class that knows how models are constructed.

@@ -11,6 +11,10 @@
 return [
     'services' => [
 
+        'controller_plugin_factory' => function ($c) {
+            return new neo\core\factory\ControllerPluginFactory($c);
+        },
+
         'config' => function ($c) {
             // read default config
             $config = [];
@@ -53,15 +57,15 @@ return [
         },
 
         'router' => function ($c) {
-            return new neo\router\Router($c['klein'], $c['controller_factory']);
+            return new neo\core\router\Router($c['klein'], $c['controller_factory']);
         },
 
         'controller_factory' => function ($c) {
-            return new neo\factory\ControllerFactory($c);
+            return new neo\core\factory\ControllerFactory($c);
         },
 
         'model_factory' => function ($c) {
-            return new neo\factory\ModelFactory($c);
+            return new neo\core\factory\ModelFactory($c);
         },
 
         'klein' => function () {

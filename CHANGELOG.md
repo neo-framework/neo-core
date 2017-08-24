@@ -6,4 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+
+- Controller Plug-in API
+- Config file for plug-ins `plugins.config.php`
+
 ### Changed
+
+- Change namespace from `neo` to `neo\core`

@@ -8,10 +8,16 @@
  * @license MIT
  */
 
-return [
-    'routes' => [
+namespace neo\core\model;
 
-        
+abstract class Model
+{
 
-    ]
-];
+    protected $db;
+
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+
+}

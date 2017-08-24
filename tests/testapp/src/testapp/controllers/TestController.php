@@ -2,7 +2,7 @@
 
 namespace testapp\controllers;
 
-use \neo\controller\Controller;
+use \neo\core\controller\Controller;
 
 class TestController extends Controller
 {

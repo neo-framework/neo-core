@@ -8,11 +8,11 @@
  * @license MIT
  */
 
-namespace neo\router;
+namespace neo\core\router;
 
 use \Klein\Klein;
 use \Klein\Request;
-use \neo\factory\Factory;
+use \neo\core\factory\Factory;
 
 /**
  * The Router forwards queries to the right controller.

@@ -8,16 +8,10 @@
  * @license MIT
  */
 
-namespace neo\model;
+return [
+    'plugins' => [
 
-abstract class Model
-{
+        //
 
-    protected $db;
-
-    public function __construct(\PDO $db)
-    {
-        $this->db = $db;
-    }
-
-}
+    ]
+];

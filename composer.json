@@ -27,7 +27,7 @@
     },
     "autoload":
     {
-        "psr-4": {"neo\\": "src/neo/"}
+        "psr-4": {"neo\\core\\": "src/neo/core/"}
     },
     "autoload-dev":
     {

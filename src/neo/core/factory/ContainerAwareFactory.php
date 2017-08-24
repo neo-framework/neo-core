@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace neo\factory;
+namespace neo\core\factory;
 
 use \Pimple\Container;
 

@@ -9,7 +9,7 @@
  */
 
 use \PHPUnit\Framework\TestCase;
-use \neo\App;
+use \neo\core\App;
 
 class AppTest extends TestCase
 {

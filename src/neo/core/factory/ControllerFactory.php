@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace neo\factory;
+namespace neo\core\factory;
 
 use \Klein\Request;
 use \Klein\Response;
@@ -36,7 +36,12 @@ class ControllerFactory extends ContainerAwareFactory
             throw new \RuntimeException('Could not instantiate controller: Expected args[1] to be of type Response.');
         }
 
-        return new $classname($args[0], $args[1], $this->container['endobox'], $this->container['model_factory']);
+        return new $classname(
+                $args[0],
+                $args[1],
+                $this->container['endobox'],
+                $this->container['model_factory'],
+                $this->container['controller_plugin_factory']);
     }
 
 }

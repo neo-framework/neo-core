@@ -9,7 +9,7 @@
  */
 
 use \PHPUnit\Framework\TestCase;
-use \neo\router\Router;
+use \neo\core\router\Router;
 use \Klein\Klein;
 
 class RouterTest extends TestCase
@@ -20,14 +20,14 @@ class RouterTest extends TestCase
     protected function setUp()
     {
         // create a controller mock
-        $controller_mock = $this->getMockBuilder('\\neo\\controller\\Controller')
+        $controller_mock = $this->getMockBuilder('\\neo\\core\\controller\\Controller')
             ->setMethods(['foo_action'])
             ->disableOriginalConstructor()
             ->getMock();
         $controller_mock->method('foo_action')
             ->willReturn("Hellowz");
         // create a controller factory mock that returns the controller
-        $factory_mock = $this->getMockBuilder('\\neo\\factory\\Factory')
+        $factory_mock = $this->getMockBuilder('\\neo\\core\\factory\\Factory')
             ->getMock();
         $factory_mock->method('__invoke')
             ->willReturn($controller_mock);
