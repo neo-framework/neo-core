@@ -25,7 +25,7 @@ class ControllerPluginFactory extends ContainerAwareFactory
             $classname = $this->container['config']['plugins'][$plugin];
         } else {
             $classname = $this->container['config']['global']['app_ns'] . '\\plugins\\controller\\'
-                    . \str_replace('_', '', \ucwords($classname, '_')) . 'Plugin';
+                    . \str_replace('_', '', \ucwords($plugin, '_')) . 'Plugin';
         }
 
         if (!\class_exists($classname)) {
