@@ -8,7 +8,7 @@ php:
 
 before_script: composer install --ignore-platform-reqs
 
-script: vendor/bin/phpunit --bootstrap vendor/autoload.php tests
+script: test.sh
 
 matrix:
     fast-finish: true
