@@ -19,10 +19,13 @@ abstract class Plugin
 
     protected $controller_factory;
 
-    public function __construct(Controller $c, ControllerFactory $cf)
+    protected $router;
+
+    public function __construct(Controller $c, ControllerFactory $cf, Router $r)
     {
         $this->controller = $c;
         $this->controller_factory = $cf;
+        $this->router = $r;
 
         $this->on_load();
     }

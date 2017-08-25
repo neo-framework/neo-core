@@ -40,7 +40,8 @@ class ControllerPluginFactory extends ContainerAwareFactory
 
         return new $classname(
                 $args[0],
-                $this->container['controller_factory']);
+                $this->container['controller_factory'],
+                $this->container['router']);
     }
 
 }

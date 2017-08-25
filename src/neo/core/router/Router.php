@@ -32,17 +32,17 @@ class Router
     }
 
     /**
-     * Find a matching route for the request and run it.
+     * Find a matching route for the request, run it, and return the result.
      */
     public function dispatch(string $request = null)
     {
         if ($request !== null) {
             $server = $_SERVER;
             $server['REQUEST_URI'] = $request;
-            $this->klein->dispatch(new Request($_GET, $_POST, $_COOKIE, $server, $_FILES));
-        } else {
-            $this->klein->dispatch();
+            $request = new Request($_GET, $_POST, $_COOKIE, $server, $_FILES);
         }
+
+        return $this->klein->dispatch($request, null, false, Klein::DISPATCH_CAPTURE_AND_RETURN);
     }
 
     /**
@@ -55,7 +55,7 @@ class Router
 
         $this->klein->respond($method, $route, function ($request, $response) use (&$cf, $action, $controller) {
 
-            return $cf($controller, [ $request, $response ])->$action();
+            echo $cf($controller, [ $request, $response ])->$action();
 
         });
     }
