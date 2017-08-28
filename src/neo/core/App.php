@@ -72,8 +72,15 @@ class App
         $this->config = $this->container['config'];
 
         // register routes
-        foreach ($this->config['routes'] as $r => $x) {
-            $this->router->map($x['method'], $r, $x['action'], $x['controller']);
+        foreach ($this->config['routes'] as $r => &$x) {
+            // single or multi route entry
+            if (isset($x['controller'])) {
+                $this->router->map($x['method'], $r, $x['action'], $x['controller']);
+            } else {
+                foreach ($x as $rr => &$xx) {
+                    $this->router->map($xx['method'], $rr, $xx['action'], $xx['controller']);
+                }
+            }
         }
     }
 
