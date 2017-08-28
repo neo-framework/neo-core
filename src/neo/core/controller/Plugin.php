@@ -12,6 +12,8 @@ namespace neo\core\controller;
 
 use \neo\core\factory\ControllerFactory;
 use \neo\core\router\Router;
+use \neo\core\router\Request;
+use \neo\core\router\Response;
 
 abstract class Plugin
 {
@@ -22,11 +24,22 @@ abstract class Plugin
 
     protected $router;
 
-    public function __construct(Controller $c, ControllerFactory $cf, Router $r)
+    protected $request;
+
+    protected $response;
+
+    public function __construct(
+            Controller $c,
+            ControllerFactory $cf,
+            Router $r,
+            Request $req,
+            Response $resp)
     {
         $this->controller = $c;
         $this->controller_factory = $cf;
         $this->router = $r;
+        $this->request = $req;
+        $this->response = $resp;
 
         $this->on_load();
     }

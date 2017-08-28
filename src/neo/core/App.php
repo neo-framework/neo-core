@@ -96,7 +96,7 @@ class App
         try {
             try {
 
-                echo $this->router->dispatch($request);
+                $this->router->dispatch($request);
 
             } catch (\Klein\Exceptions\UnhandledException $e) {
                 throw new \RuntimeException($e->getMessage());

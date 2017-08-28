@@ -74,7 +74,7 @@ abstract class Controller
         }
 
         // create and save new instance
-        $this->plugins[$plugin] = ($this->plugin_factory)($plugin, [$this]);
+        $this->plugins[$plugin] = ($this->plugin_factory)($plugin, [ $this, $this->request, $this->response ]);
 
         // get plugin entry points
         $this->plugin_methods = \array_merge(

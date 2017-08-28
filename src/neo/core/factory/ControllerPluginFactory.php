@@ -12,6 +12,8 @@ namespace neo\core\factory;
 
 use \neo\core\controller\Controller;
 use \neo\core\factory\ControllerFactory;
+use \neo\core\router\Request;
+use \neo\core\router\Response;
 
 /**
  * This is the class that knows how controller plug-ins are constructed.
@@ -38,10 +40,22 @@ class ControllerPluginFactory extends ContainerAwareFactory
                     'Could not instantiate controller plug-in: Expected args[0] to be of type Controller.');
         }
 
+        if (!(isset($args[1]) && $args[1] instanceof Request)) {
+            throw new \RuntimeException(
+                    'Could not instantiate controller plug-in: Expected args[1] to be of type Request.');
+        }
+
+        if (!(isset($args[2]) && $args[2] instanceof Response)) {
+            throw new \RuntimeException(
+                    'Could not instantiate controller plug-in: Expected args[2] to be of type Response.');
+        }
+
         return new $classname(
                 $args[0],
                 $this->container['controller_factory'],
-                $this->container['router']);
+                $this->container['router'],
+                $args[1],
+                $args[2]);
     }
 
 }
