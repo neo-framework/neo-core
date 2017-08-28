@@ -73,4 +73,13 @@ class AppTest extends TestCase
         App::instance(__DIR__ . '/testapp')->run('/testapp');
     }
 
+    public function testExampleAppWithMultipleRoutes()
+    {
+        $this->expectOutputString("hihellofoobar");
+        App::instance(__DIR__ . '/anothertestapp')->run('/hi');
+        App::instance(__DIR__ . '/anothertestapp')->run('/hello');
+        App::instance(__DIR__ . '/anothertestapp')->run('/foo');
+        App::instance(__DIR__ . '/anothertestapp')->run('/bar');
+    }
+
 }

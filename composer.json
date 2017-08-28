@@ -31,6 +31,10 @@
     },
     "autoload-dev":
     {
-        "psr-4": {"testapp\\": "tests/testapp/src/testapp/"}
+        "psr-4":
+        {
+            "testapp\\": "tests/testapp/src/testapp/",
+            "anothertestapp\\": "tests/anothertestapp/src/anothertestapp/"
+        }
     }
 }
