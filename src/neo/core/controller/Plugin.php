@@ -12,8 +12,8 @@ namespace neo\core\controller;
 
 use \neo\core\factory\ControllerFactory;
 use \neo\core\router\Router;
-use \neo\core\router\Request;
-use \neo\core\router\Response;
+use \Klein\Request;
+use \Klein\Response;
 
 abstract class Plugin
 {

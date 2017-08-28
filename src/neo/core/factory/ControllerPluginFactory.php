@@ -12,8 +12,8 @@ namespace neo\core\factory;
 
 use \neo\core\controller\Controller;
 use \neo\core\factory\ControllerFactory;
-use \neo\core\router\Request;
-use \neo\core\router\Response;
+use \Klein\Request;
+use \Klein\Response;
 
 /**
  * This is the class that knows how controller plug-ins are constructed.
