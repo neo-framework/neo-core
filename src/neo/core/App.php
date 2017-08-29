@@ -77,8 +77,8 @@ class App
             if (isset($x['controller'])) {
                 $this->router->map($x['method'], $r, $x['action'], $x['controller']);
             } else {
-                foreach ($x as $rr => &$xx) {
-                    $this->router->map($xx['method'], $rr, $xx['action'], $xx['controller']);
+                foreach ($x as &$xx) {
+                    $this->router->map($xx['method'], $r, $xx['action'], $xx['controller']);
                 }
             }
         }

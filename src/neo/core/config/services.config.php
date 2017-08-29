@@ -43,13 +43,30 @@ return [
             }
 
             // default route keys
-            foreach ($config['routes'] as &$r) {
-                if (!isset($r['method'])) {
-                    $r['method'] = 'GET';
-                }
+            foreach ($config['routes'] as $r => &$x) {
+                // single or multi route entry
+                if (isset($x['controller'])) {
+                    // default method to GET
+                    if (!isset($x['method'])) {
+                        $x['method'] = 'GET';
+                    }
 
-                if (!isset($r['action'])) {
-                    $r['action'] = 'index_action';
+                    // default action to index_action
+                    if (!isset($x['action'])) {
+                        $x['action'] = 'index_action';
+                    }
+                } else {
+                    foreach ($x as &$xx) {
+                        // default method to GET
+                        if (!isset($xx['method'])) {
+                            $xx['method'] = 'GET';
+                        }
+
+                        // default action to index_action
+                        if (!isset($xx['action'])) {
+                            $xx['action'] = 'index_action';
+                        }
+                    }
                 }
             }
 
