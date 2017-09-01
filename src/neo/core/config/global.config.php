@@ -16,7 +16,8 @@ return [
         'log_file' => 'log/neo.log',
         'log_level' => 'DEBUG',
         'debug' => true,
-        'app_ns' => 'myapp'
+        'app_ns' => 'myapp',
+        'database' => null
 
     ]
 ];

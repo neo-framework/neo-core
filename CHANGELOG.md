@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Controller Plug-in API
 - Config file for plug-ins `plugins.config.php`
+- SQLite support
 
 ### Changed
 

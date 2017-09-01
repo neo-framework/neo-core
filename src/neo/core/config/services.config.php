@@ -94,24 +94,45 @@ return [
         },
 
         'database_connection' => function ($c) {
-            $config = $c['config']['mysql'];
-            try {
-                $pdo = new PDO(
-                    sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s',
-                        $config['host'],
-                        $config['port'],
-                        $config['dbname'],
-                        $config['charset']),
-                    $config['username'],
-                    $config['password'],
-                    [
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-                    ]);
-            } catch (PDOException $e) {
-                throw new RuntimeException($e->getMessage());
+            if ($c['config']['global']['database'] === 'mysql') {
+                $config = $c['config']['mysql'];
+                try {
+                    $pdo = new PDO(sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s',
+                            $config['host'],
+                            $config['port'],
+                            $config['dbname'],
+                            $config['charset']),
+                            $config['username'],
+                            $config['password'],
+                            [
+                                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                            ]);
+                } catch (PDOException $e) {
+                    throw new RuntimeException($e->getMessage());
+                }
+                return $pdo;
             }
-            return $pdo;
+
+            if ($c['config']['global']['database'] === 'sqlite') {
+                $config = $c['config']['sqlite'];
+                try {
+                    $pdo = new PDO(sprintf('sqlite:%s',
+                            $config['file']),
+                            null,
+                            null,
+                            [
+                                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                            ]);
+                } catch (PDOException $e) {
+                    throw new RuntimeException($e->getMessage());
+                }
+                return $pdo;
+            }
+
+            throw new RuntimeException(sprintf(
+                    'No suitable database backend ("%s") is set in config.', $c['config']['global']['database']));
         }
 
     ]
