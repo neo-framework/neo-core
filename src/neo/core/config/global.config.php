@@ -14,7 +14,7 @@ return [
         'timezone' => 'Europe/Berlin',
         'logging' => true,
         'log_file' => 'log/neo.log',
-        'log_level' => 'DEBUG',
+        'log_level' => 'debug',
         'debug' => true,
         'app_ns' => 'myapp',
         'database' => null
