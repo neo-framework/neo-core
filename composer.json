@@ -19,7 +19,7 @@
     {
         "klein/klein": "dev-master",
         "pimple/pimple": "^3.0@dev",
-        "younishd/endobox": "^2.1"
+        "younishd/endobox": "^3.0"
     },
     "require-dev":
     {
