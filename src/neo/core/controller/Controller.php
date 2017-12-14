@@ -12,7 +12,7 @@ namespace neo\core\controller;
 
 use \Klein\Request;
 use \Klein\Response;
-use \endobox\Factory as EndoboxFactory;
+use \endobox\BoxFactory;
 use \endobox\Box;
 use \neo\core\factory\ModelFactory;
 use \neo\core\factory\ControllerPluginFactory;
@@ -36,7 +36,7 @@ abstract class Controller
     public function __construct(
             Request $req,
             Response $resp,
-            EndoboxFactory $endobox,
+            BoxFactory $endobox,
             ModelFactory $mf,
             ControllerPluginFactory $cpf)
     {
