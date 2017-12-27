@@ -36,5 +36,9 @@
             "testapp\\": "tests/testapp/src/testapp/",
             "anothertestapp\\": "tests/anothertestapp/src/anothertestapp/"
         }
+    },
+    "scripts":
+    {
+        "test": "phpunit --bootstrap vendor/autoload.php tests"
     }
 }
