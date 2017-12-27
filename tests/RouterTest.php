@@ -44,4 +44,23 @@ class RouterTest extends TestCase
         $this->router->dispatch('/test');
     }
 
+    public function testMultiMethods()
+    {
+        // map GET|POST /test to Bar::foo()
+        $this->router->map(['GET', 'POST'], '/test', 'foo_action', 'BarController');
+
+        $this->expectOutputString("HellowzHellowz");
+
+        // get
+        $this->router->dispatch('/test');
+
+        // post
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $this->router->dispatch('/test');
+
+        // delete
+        $_SERVER['REQUEST_METHOD'] = 'DELETE';
+        $this->router->dispatch('/test');
+    }
+
 }

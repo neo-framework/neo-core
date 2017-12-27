@@ -48,16 +48,22 @@ class Router
     /**
      * Map an http method and route to an action and controller.
      */
-    public function map(string $method, string $route, string $action, string $controller)
+    public function map($method, string $route, string $action, string $controller)
     {
         // alias
         $cf = $this->controller_factory;
 
-        $this->klein->respond($method, $route, function ($request, $response) use (&$cf, $action, $controller) {
+        if (!\is_array($method)) {
+            $method = [(string)$method];
+        }
 
-            return $cf($controller, [ $request, $response ])->$action();
+        foreach ($method as $m) {
+            $this->klein->respond($m, $route, function ($request, $response) use (&$cf, $action, $controller) {
 
-        });
+                return $cf($controller, [$request, $response])->$action();
+
+            });
+        }
     }
 
 }
