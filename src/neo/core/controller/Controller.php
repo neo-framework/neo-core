@@ -1,119 +1,150 @@
 <?php
 
 /**
- * Neo Framework
+ * This file is part of Neo Framework.
  *
- * @link https://neo-framework.github.io
- * @copyright Copyright (c) 2016-2017 YouniS Bensalah <younis.bensalah@gmail.com>
- * @license MIT
+ * (c) 2016-2018 YouniS Bensalah <younis.bensalah@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace neo\core\controller;
 
-use \Klein\Request;
-use \Klein\Response;
+use \Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\Response;
 use \endobox\BoxFactory;
 use \endobox\Box;
-use \neo\core\factory\ModelFactory;
-use \neo\core\factory\ControllerPluginFactory;
-use \neo\core\model\Model;
+use \Psr\Log\LoggerInterface as Logger;
 
+/**
+ * Controller base class.
+ *
+ * All Controller classes within your Neo application should extend this one.
+ */
 abstract class Controller
 {
 
-    protected $request;
+    /**
+     * @var Request The incoming request.
+     */
+    protected $request = null;
 
-    protected $response;
+    /**
+     * @var Response The outgoing response.
+     */
+    protected $response = null;
 
-    private $view_factory;
+    /**
+     * @var Logger This logger can be used to log all kinds of stuff within your {@link Controller}.
+     */
+    protected $logger = null;
 
-    private $model_factory;
+    private $endobox = null;
 
-    private $plugins = [];
-    private $plugin_methods = [];
-    private $plugin_factory;
+    // TODO plug-ins
 
-    public function __construct(
-            Request $req,
-            Response $resp,
-            BoxFactory $endobox,
-            ModelFactory $mf,
-            ControllerPluginFactory $cpf)
+    /**
+     * Default entry point of the Controller.
+     *
+     * @return mixed Response to be sent to the client.
+     */
+    public abstract function indexAction();
+
+    // TODO allow implicit rendering: no need to return a response.
+    // return type could be string or Response or ?Response. not sure which
+    // in any case it's probably too explicit to return a Response object each time.
+
+    /**
+     * Initialize the Controller.
+     * This gets called once after the Controller is fully constructed and all dependencies
+     * (both user and framework dependencies) have been injected, yet before any action is called.
+     *
+     * This is where you usually set up some global settings that are relevant for the entire Controller class.
+     *
+     * Caveat: This is not equivalent to the constructor, because inside the constructor you won't have access
+     * to things like the Request or Response object yet, whereas you do here.
+     */
+    public function initialize() {}
+
+    /**
+     *
+     */
+    protected function redirect()
     {
-        $this->request = $req;
-        $this->response = $resp;
-        $this->view_factory = $endobox;
-        $this->model_factory = $mf;
-        $this->plugin_factory = $cpf;
-    }
-
-    public function __call(string $name, array $arguments)
-    {
-        if (!isset($this->plugin_methods[$name])) {
-            throw new \BadMethodCallException(\sprintf(
-                    'No such method "%s". Did you forget to load a plug-in?', $name));
-        }
-        if (!isset($this->plugins[$this->plugin_methods[$name]])) {
-            throw new \RuntimeException(\sprintf(
-                    'Failed to call method "%s" in plug-in "%s". Plug-in not loaded correctly.',
-                    $name, $this->plugin_methods[$name]));
-        }
-
-        $plugin = $this->plugins[$this->plugin_methods[$name]];
-        return $plugin->$name(...$arguments);
+        // TODO allow relative and absolute redirects as well as controller + action redirects
     }
 
     /**
-     * Dynamically load a plugin.
+     * Inject {@link BoxFactory} instance.
+     *
+     * @param BoxFactory
      */
-    protected function load(string $plugin)
+    public function setBoxFactory(BoxFactory $endobox)
     {
-        // check if plugin instance already exists
-        if (isset($this->plugins[$plugin])) {
-            return;
-        }
-
-        // create and save new instance
-        $this->plugins[$plugin] = ($this->plugin_factory)($plugin, [ $this, $this->request, $this->response ]);
-
-        // get plugin entry points
-        $this->plugin_methods = \array_merge(
-                $this->plugin_methods,
-                \array_fill_keys(\array_filter(\get_class_methods($this->plugins[$plugin]),
-                function($v) { return \substr($v, 0, 2) !== '__'; }),
-                $plugin));
+        $this->endobox = $endobox;
     }
 
     /**
-     * Usually, this is what I want to do:
+     * Inject a {@link Request} instance.
      *
-     * $test = $endobox('template');
-     *
-     * Now, $endobox is no longer a simple variable, but a property:
-     *
-     * $test = $this->view_factory('template');
-     *
-     * Except PHP will now think that we're trying to call a method named view_factory() which does not exist.
-     * To fix this we'd have to write explicit parenthesis like this:
-     *
-     * $test = ($this->view_factory)('template');
-     *
-     * But that's pretty ugly and that's why this method exists.
-     * Now I just write:
-     *
-     * $test = $this->view('template');
+     * @param Request
      */
-     protected function view(string $template) : Box
-     {
-         return ($this->view_factory)($template);
-     }
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
-     /**
-      * Get model instance by class name.
-      */
-     protected function model(string $modelname) : Model
-     {
-         return ($this->model_factory)($modelname);
-     }
+    /**
+     * Inject a {@link Response} instance.
+     *
+     * @param Response
+     */
+    public function setResponse(Response $response)
+    {
+        $this->response = $response;
+    }
+
+    /**
+     * Inject a {@link Logger} instance.
+     *
+     * @param Logger
+     */
+    public function setLogger(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * Call a plug-in method if one was loaded.
+     *
+     * @param string $name Method name.
+     * @param array $arguments List of arguments to pass.
+     * @return mixed Whatever the plug-in decides to return.
+     * @throws \BadMethodCallException if no such plug-in was loaded.
+     */
+    protected function __call(string $name, array $arguments)
+    {
+    }
+
+    /**
+     * Load a plug-in on the fly.
+     *
+     * @param string $plugin Name of the plug-in.
+     */
+    protected function loadPlugin(string $plugin)
+    {
+    }
+
+    /**
+     * Shortcut to access endobox in a more convenient manner.
+     *
+     * @param string $template Name of the template you want to create.
+     * @return Box The Box holding your template.
+     */
+    protected function view(string $template) : Box
+    {
+        return ($this->endobox)($template);
+    }
 
 }
