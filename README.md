@@ -6,4 +6,4 @@ Core components from Neo Framework :pear:
 
 ## License
 
-[MIT](LICENSE)
+_Neo Framework_ is open-sourced software licensed under the [MIT license](LICENSE).
