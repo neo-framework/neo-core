@@ -1,6 +1,6 @@
 {
     "name": "neo-framework/neo-core",
-    "description": "Core components from Neo Framework",
+    "description": "Core components from Neo Framework.",
     "version": "0.0.1-dev",
     "type": "library",
     "homepage": "https://neo-framework.github.io",
@@ -11,34 +11,47 @@
         {
             "name": "YouniS Bensalah",
             "email": "younis.bensalah@gmail.com",
-            "homepage": "http://younishd.fr"
+            "homepage": "https://younishd.fr"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "7.0.0"
+        },
+        "optimize-autoloader": true
+    },
     "minimum-stability": "dev",
     "require":
     {
-        "klein/klein": "dev-master",
-        "pimple/pimple": "^3.0@dev",
-        "younishd/endobox": "dev-master"
+        "younishd/endobox": "dev-master",
+        "psr/log": "^1.0",
+        "php": "^7.0",
+        "symfony/http-foundation": "^3.3",
+        "nikic/fast-route": "dev-master"
     },
     "require-dev":
     {
-        "phpunit/phpunit": "^6.3"
+        "phpunit/phpunit": "^6.5"
     },
     "autoload":
     {
-        "psr-4": {"neo\\core\\": "src/neo/core/"}
+        "psr-4":
+        {
+            "neo\\core\\": "src/neo/core/"
+        }
     },
     "autoload-dev":
     {
         "psr-4":
         {
+            "neo\\core\\tests\\": "tests/neo/core/",
             "testapp\\": "tests/testapp/src/testapp/",
             "anothertestapp\\": "tests/anothertestapp/src/anothertestapp/"
         }
     },
     "scripts":
     {
-        "test": "phpunit --bootstrap vendor/autoload.php tests"
+        "test": "phpunit --bootstrap vendor/autoload.php tests",
+        "docs": "phpdoc run -d src -t docs"
     }
 }
