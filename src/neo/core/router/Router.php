@@ -1,69 +1,50 @@
 <?php
 
 /**
- * Neo Framework
+ * This file is part of Neo Framework.
  *
- * @link https://neo-framework.github.io
- * @copyright Copyright (c) 2016-2017 YouniS Bensalah <younis.bensalah@gmail.com>
- * @license MIT
+ * (c) 2016-2018 YouniS Bensalah <younis.bensalah@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace neo\core\router;
 
-use \Klein\Klein;
-use \Klein\Request;
-use \neo\core\factory\Factory;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use FastRoute\Dispatcher;
 
 /**
- * The Router forwards queries to the right controller.
- * Here, we are using Klein as a backend to handle the routing.
+ *
  */
 class Router
 {
 
-    private $klein;
+    private $fastroute;
 
-    private $controller_factory;
-
-    public function __construct(Klein $klein, Factory $controller_factory)
+    public function __construct(Dispatcher $fastroute)
     {
-        $this->klein = $klein;
-        $this->controller_factory = $controller_factory;
+        $this->fastroute = $fastroute;
     }
 
     /**
-     * Find a matching route for the request and run it.
+     *
      */
-    public function dispatch(string $request = null)
+    public function dispatch(Request $request)
     {
-        if ($request !== null) {
-            $server = $_SERVER;
-            $server['REQUEST_URI'] = $request;
-            $request = new Request($_GET, $_POST, $_COOKIE, $server, $_FILES);
-        }
-
-        $this->klein->dispatch($request);
     }
 
     /**
-     * Map an http method and route to an action and controller.
+     * Map HTTP method and route to some action and controller.
+     *
+     * @param mixed $method Uppercase HTTP method string or array of multiple methods.
+     * @param string $route Concrete route or route pattern.
+     * @param string $action Name of the action method that shall be called if route gets matched.
+     * @param string $controller Fully qualified class name of the {@link Controller} that shall be invoked.
      */
     public function map($method, string $route, string $action, string $controller)
     {
-        // alias
-        $cf = $this->controller_factory;
-
-        if (!\is_array($method)) {
-            $method = [(string)$method];
-        }
-
-        foreach ($method as $m) {
-            $this->klein->respond($m, $route, function ($request, $response) use (&$cf, $action, $controller) {
-
-                return $cf($controller, [$request, $response])->$action();
-
-            });
-        }
     }
 
 }
