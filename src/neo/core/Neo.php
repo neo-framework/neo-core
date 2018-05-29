@@ -12,6 +12,7 @@
 namespace neo\core;
 
 use \neo\core\router\Router;
+use \Psr\Log\NullLogger;
 
 /**
  *
@@ -24,7 +25,12 @@ final class Neo
      */
     public static function create(string $root) : Application
     {
-        return new Application($root, new Router());
+        // TODO fill router with routes from config files
+        // TODO read config and decide which logger to use
+        return new Application(
+                Configuration::createFromFile($root . '/config/neo.json'),
+                new Router(),
+                new NullLogger());
     }
 
     private function __construct()

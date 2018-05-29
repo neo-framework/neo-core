@@ -20,7 +20,7 @@ use \Psr\Log\LoggerInterface as Logger;
 class Application
 {
 
-    private $root;
+    private $config;
 
     private $router;
 
@@ -29,14 +29,15 @@ class Application
     private $controller_factories;
 
     /**
-     * Construct an Application inside the given root directory.
+     * Construct an Application based on a given {@link Configuration}.
      *
-     * @param string $root Root directory of the application.
+     * @param Configuration $config Application configuration.
      * @param Router $router Instance of Neo's awesome router.
+     * @param Logger $logger Logger to be used throughout the whole application
      */
-    public function __construct(string $root, Router $router, Logger $logger)
+    public function __construct(Configuration $config, Router $router, Logger $logger)
     {
-        $this->root = $root;
+        $this->config = $config;
         $this->router = $router;
         $this->logger = $logger;
         $this->$controller_factories = [];
