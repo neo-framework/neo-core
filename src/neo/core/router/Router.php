@@ -11,9 +11,10 @@
 
 namespace neo\core\router;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use FastRoute\Dispatcher;
+use \neo\core\controller\ControllerFactory;
+use \neo\core\controller\ProxyControllerFactory;
+use \Klein\Klein;
+use \Klein\Request;
 
 /**
  *
@@ -21,18 +22,14 @@ use FastRoute\Dispatcher;
 class Router
 {
 
-    private $fastroute;
+    private $klein;
 
-    public function __construct(Dispatcher $fastroute)
-    {
-        $this->fastroute = $fastroute;
-    }
+    private $proxy_factory;
 
-    /**
-     *
-     */
-    public function dispatch(Request $request)
+    public function __construct(Klein $klein, ProxyControllerFactory $proxy_factory)
     {
+        $this->klein = $klein;
+        $this->proxy_factory = $proxy_factory;
     }
 
     /**
@@ -45,6 +42,39 @@ class Router
      */
     public function map($method, string $route, string $action, string $controller)
     {
+        // alias
+        $proxy = $this->proxy_factory;
+
+        if (!\is_array($method)) {
+            $method = [(string)$method];
+        }
+
+        // TODO assert whitelist methods
+
+        foreach ($method as $m) {
+            $this->klein->respond($m, $route, function ($request, $response) use (&$proxy, $action, $controller) {
+
+                return $proxy($controller)
+                        ->setRequest($request)
+                        ->setResponse($response)
+                        ->$action();
+
+            });
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function dispatch(Request $request, ControllerFactory $actual_factory)
+    {
+        $this->proxy_factory
+                ->replace($actual_factory)
+                ->close();
+
+        return $this->klein->dispatch($request);
     }
 
 }
