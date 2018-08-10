@@ -13,23 +13,29 @@ namespace neo\core;
 
 use \neo\core\router\Router;
 use \Psr\Log\NullLogger;
+use \Klein\Klein;
 
 /**
- *
+ * Facade for {@link Application} with sensible default values.
  */
 final class Neo
 {
 
     /**
-     *
+     * Create a fresh {@link Application} from config file.
+     * @param string $root Path to root directory which should contain the "config" folder.
      */
     public static function create(string $root) : Application
     {
-        // TODO fill router with routes from config files
         // TODO read config and decide which logger to use
+        // TODO check if paths exist
         return new Application(
-                Configuration::createFromFile($root . '/config/neo.json'),
-                new Router(),
+                $root,
+                require $root . '/config/neo.config.php',
+                require $root . '/config/routes.config.php',
+                new Router(
+                        new Klein(),
+                        new ProxyControllerFactory()),
                 new NullLogger());
     }
 
