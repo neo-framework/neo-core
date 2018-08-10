@@ -11,8 +11,8 @@
 
 namespace neo\core\controller;
 
-use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
+use \Klein\Request;
+use \Klein\Response;
 use \endobox\BoxFactory;
 use \endobox\Box;
 use \Psr\Log\LoggerInterface as Logger;
@@ -49,7 +49,7 @@ abstract class Controller
      *
      * @return mixed Response to be sent to the client.
      */
-    public abstract function indexAction();
+    abstract public function indexAction();
 
     // TODO allow implicit rendering: no need to return a response.
     // return type could be string or Response or ?Response. not sure which
@@ -76,16 +76,6 @@ abstract class Controller
     }
 
     /**
-     * Inject {@link BoxFactory} instance.
-     *
-     * @param BoxFactory
-     */
-    public function setBoxFactory(BoxFactory $endobox)
-    {
-        $this->endobox = $endobox;
-    }
-
-    /**
      * Inject a {@link Request} instance.
      *
      * @param Request
@@ -93,6 +83,7 @@ abstract class Controller
     public function setRequest(Request $request)
     {
         $this->request = $request;
+        return $this;
     }
 
     /**
@@ -103,6 +94,18 @@ abstract class Controller
     public function setResponse(Response $response)
     {
         $this->response = $response;
+        return $this;
+    }
+
+    /**
+     * Inject {@link BoxFactory} instance.
+     *
+     * @param BoxFactory
+     */
+    public function setBoxFactory(BoxFactory $endobox)
+    {
+        $this->endobox = $endobox;
+        return $this;
     }
 
     /**
@@ -113,6 +116,7 @@ abstract class Controller
     public function setLogger(Logger $logger)
     {
         $this->logger = $logger;
+        return $this;
     }
 
     /**
