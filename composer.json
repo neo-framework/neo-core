@@ -27,7 +27,7 @@
         "psr/log": "^1.0",
         "php": "^7.0",
         "symfony/http-foundation": "^3.3",
-        "nikic/fast-route": "dev-master"
+        "klein/klein": "dev-master"
     },
     "require-dev":
     {
