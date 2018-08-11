@@ -25,7 +25,7 @@ class ProxyControllerFactory extends ControllerFactory
     public function replace(ControllerFactory $actual_factory)
     {
         $this->factory = $actual_factory;
-        
+
         return $this;
     }
 
@@ -60,7 +60,7 @@ class ProxyControllerFactory extends ControllerFactory
         return $this;
     }
 
-    public function isClosed() : boolean
+    public function isClosed() : bool
     {
         if ($this->factory !== null) {
             return $this->factory->isClosed();

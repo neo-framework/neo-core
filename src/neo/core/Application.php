@@ -12,19 +12,20 @@
 namespace neo\core;
 
 use \neo\core\router\Router;
+use \neo\core\controller\Controller;
+use \neo\core\controller\ControllerFactory;
 use \neo\core\controller\MultiControllerFactory;
+use \neo\core\controller\ControllerFactoryDecorator;
 use \neo\core\Configuration;
 use \Psr\Log\LoggerInterface as Logger;
 use \Klein\Request;
-use \endobox\Endobox;
+use \endobox\BoxFactory;
 
 /**
  * Neo Application.
  */
 class Application
 {
-
-    private $root;
 
     private $config;
 
@@ -33,6 +34,8 @@ class Application
     private $router;
 
     private $logger;
+
+    private $endobox;
 
     private $controller_factories = [];
 
@@ -45,12 +48,17 @@ class Application
      * @param Router $router Instance of Neo's awesome router.
      * @param Logger $logger Logger to be used throughout the whole application.
      */
-    public function __construct(string $root, array $config, array $routes, Router $router, Logger $logger)
+    public function __construct(
+            array $config,
+            array $routes,
+            Router $router,
+            BoxFactory $endobox,
+            Logger $logger)
     {
-        $this->root = $root;
         $this->config = $config;
         $this->routes = $routes;
         $this->router = $router;
+        $this->endobox = $endobox;
         $this->logger = $logger;
     }
 
@@ -75,6 +83,7 @@ class Application
             }
         }
 
+
         // dispatch
         try {
             try {
@@ -82,12 +91,10 @@ class Application
                 $this->router->dispatch(
                         Request::createFromGlobals(),
                         new class(
-                                new MultiControllerFactory($this->controller_factories),
-                                Endobox::create(\sprintf('%s/src/%s/views',
-                                        $this->root, $this->config['app-namespace'])),
+                                new MultiControllerFactory(...$this->controller_factories),
+                                $this->endobox,
                                 $this->logger)
-
-                                extends ControllerFactoryDecorator {
+                            extends ControllerFactoryDecorator {
 
                             private $endobox;
                             private $logger;
@@ -111,7 +118,9 @@ class Application
                         });
 
             } catch (\Klein\Exceptions\UnhandledException $e) {
-                throw new \RuntimeException(\sprintf('%s: %s', \get_class($e), $e->getMessage()));
+                // TODO fix this mess with the stack trace being part of the message
+                throw new \RuntimeException(\sprintf("%s: %s\n<pre>%s</pre>",
+                        \get_class($e), $e->getMessage(), $e->getTraceAsString()), $e->getCode(), $e);
             }
         } catch (\Exception $e) {
             if ($this->config['debug'] === true) {
@@ -130,7 +139,7 @@ class Application
      */
     public function registerControllerFactory(ControllerFactory $cf)
     {
-        $this->controller_factories[] = $cf;
+        \array_unshift($this->controller_factories, $cf);
 
         return $this;
     }

@@ -38,7 +38,7 @@ class MultiControllerFactory extends ControllerFactory
             $fac->open();
             $controller = $fac->create($type);
             if ($closed) $fac->close();
-            if ($controller !== null) return $c;
+            if ($controller !== null) return $controller;
         }
 
         return $this->fallthrough($type);

@@ -56,7 +56,7 @@ abstract class ControllerFactory
         return $this;
     }
 
-    public function isClosed() : boolean
+    public function isClosed() : bool
     {
         return $this->closed;
     }

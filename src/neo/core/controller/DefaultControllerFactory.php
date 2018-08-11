@@ -22,12 +22,14 @@ class DefaultControllerFactory extends ControllerFactory
      */
     public function create(string $type) : ?Controller
     {
+        if (\class_exists($type) === false) {
+            return $this->fallthrough($type);
+        }
+
         $ref = new \ReflectionClass($type);
         $ctor = $ref->getConstructor();
         if ($ctor && $ctor->getNumberOfParameters() === 0) {
-
             return $type();
-
         }
 
         return $this->fallthrough($type);

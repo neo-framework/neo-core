@@ -12,8 +12,10 @@
 namespace neo\core;
 
 use \neo\core\router\Router;
+use \neo\core\controller\ProxyControllerFactory;
 use \Psr\Log\NullLogger;
 use \Klein\Klein;
+use \endobox\Endobox;
 
 /**
  * Facade for {@link Application} with sensible default values.
@@ -27,15 +29,19 @@ final class Neo
      */
     public static function create(string $root) : Application
     {
+        $config = require $root . '/config/neo.config.php';
+        $config['root'] = $root;
+        
+        $routes = require $root . '/config/routes.config.php';
+
+
         // TODO read config and decide which logger to use
         // TODO check if paths exist
         return new Application(
-                $root,
-                require $root . '/config/neo.config.php',
-                require $root . '/config/routes.config.php',
-                new Router(
-                        new Klein(),
-                        new ProxyControllerFactory()),
+                $config,
+                $routes,
+                new Router(new Klein(), new ProxyControllerFactory()),
+                Endobox::create(\sprintf('%s/src/%s/views', $root, $config['app-namespace'])),
                 new NullLogger());
     }
 
