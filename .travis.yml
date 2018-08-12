@@ -4,7 +4,6 @@ php:
     - '7.1'
     - '7.2'
     - nightly
-    - hhvm
 
 before_script: composer install --ignore-platform-reqs
 
@@ -14,4 +13,3 @@ matrix:
     fast-finish: true
     allow_failures:
         - php: nightly
-        - php: hhvm
