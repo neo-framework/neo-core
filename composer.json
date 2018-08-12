@@ -16,14 +16,14 @@
     ],
     "config": {
         "platform": {
-            "php": "7.0.0"
+            "php": "7.1.0"
         },
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
     "require":
     {
-        "php": "^7.0",
+        "php": "^7.1",
         "younishd/endobox": "dev-master",
         "psr/log": "^1.0",
         "klein/klein": "dev-master"
