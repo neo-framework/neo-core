@@ -16,7 +16,6 @@ use \neo\core\controller\Controller;
 use \neo\core\controller\ControllerFactory;
 use \neo\core\controller\MultiControllerFactory;
 use \neo\core\controller\ControllerFactoryDecorator;
-use \neo\core\Configuration;
 use \Psr\Log\LoggerInterface as Logger;
 use \Klein\Request;
 use \endobox\BoxFactory;
@@ -40,12 +39,12 @@ class Application
     private $controller_factories = [];
 
     /**
-     * Construct an Application based on a given {@link Configuration}.
+     * Construct an Application based on a given configuration.
      *
-     * @param string Path to Application root directory.
      * @param array $config Global application configuration.
      * @param array $routes Map of defined routes.
      * @param Router $router Instance of Neo's awesome router.
+     * @param BoxFactory $endobox Endobox template engine.
      * @param Logger $logger Logger to be used throughout the whole application.
      */
     public function __construct(
