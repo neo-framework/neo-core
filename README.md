@@ -4,6 +4,14 @@
 
 Core components from Neo Framework. :tanabata_tree:
 
+## Testing
+
+Run the test suite like this:
+
+```bash
+composer test
+```
+
 ## License
 
 _Neo Framework_ is open-sourced software licensed under the [MIT license](LICENSE).
