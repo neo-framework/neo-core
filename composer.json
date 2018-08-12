@@ -23,10 +23,9 @@
     "minimum-stability": "dev",
     "require":
     {
+        "php": "^7.0",
         "younishd/endobox": "dev-master",
         "psr/log": "^1.0",
-        "php": "^7.0",
-        "symfony/http-foundation": "^3.3",
         "klein/klein": "dev-master"
     },
     "require-dev":
@@ -44,9 +43,7 @@
     {
         "psr-4":
         {
-            "neo\\core\\tests\\": "tests/neo/core/",
-            "testapp\\": "tests/testapp/src/testapp/",
-            "anothertestapp\\": "tests/anothertestapp/src/anothertestapp/"
+            "neo\\core\\tests\\": "tests/neo/core/"
         }
     },
     "scripts":
