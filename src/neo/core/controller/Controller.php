@@ -127,7 +127,7 @@ abstract class Controller
      * @return mixed Whatever the plug-in decides to return.
      * @throws \BadMethodCallException if no such plug-in was loaded.
      */
-    protected function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments)
     {
     }
 
