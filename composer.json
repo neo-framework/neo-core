@@ -1,7 +1,7 @@
 {
     "name": "neo-framework/neo-core",
     "description": "Core components from Neo Framework.",
-    "version": "0.0.1-dev",
+    "version": "0.0.1",
     "type": "library",
     "homepage": "https://neo-framework.github.io",
     "keywords": ["framework", "neo"],
