@@ -31,7 +31,7 @@ final class Neo
     {
         $config = require $root . '/config/neo.config.php';
         $config['root'] = $root;
-        
+
         $routes = require $root . '/config/routes.config.php';
 
 
@@ -41,7 +41,7 @@ final class Neo
                 $config,
                 $routes,
                 new Router(new Klein(), new ProxyControllerFactory()),
-                Endobox::create(\sprintf('%s/src/%s/views', $root, $config['app-namespace'])),
+                Endobox::create(\sprintf('%s/src/%s/views', $root, \str_replace('\\', '/', $config['app-namespace']))),
                 new NullLogger());
     }
 
