@@ -1,11 +1,12 @@
 <?php
 
 /**
- * Neo Framework
+ * This file is part of Neo Framework.
  *
- * @link https://neo-framework.github.io
- * @copyright Copyright (c) 2016-2017 YouniS Bensalah <younis.bensalah@gmail.com>
- * @license MIT
+ * (c) 2016-2018 YouniS Bensalah <younis.bensalah@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace neo\core\tests;
