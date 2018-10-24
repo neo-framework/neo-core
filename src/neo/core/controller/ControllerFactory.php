@@ -37,7 +37,6 @@ abstract class ControllerFactory
     /**
      * Close this factory.
      * A closed factory is supposed to throw an InvalidArgumentException if it cannot create the requested instance.
-     * The way to handle a class that cannot be created by the Factory is to return
      */
     public function close()
     {
@@ -71,7 +70,7 @@ abstract class ControllerFactory
     {
         // when closed
         if ($this->closed) {
-            throw new \InvalidArgumentException('Cannot create instance of type "%s".', $type);
+            throw new \InvalidArgumentException(\sprintf('Cannot create instance of type "%s".', $type));
         }
 
         // when open
