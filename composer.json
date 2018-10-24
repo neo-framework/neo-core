@@ -43,7 +43,8 @@
     {
         "psr-4":
         {
-            "neo\\core\\tests\\": "tests/neo/core/"
+            "neo\\core\\tests\\": "tests/neo/core/",
+            "example\\": "tests/neo/core/example/src/"
         }
     },
     "scripts":
