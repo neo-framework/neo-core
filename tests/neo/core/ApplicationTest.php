@@ -17,7 +17,7 @@ use \neo\core\router\Router;
 use \endobox\BoxFactory;
 use \Psr\Log\NullLogger;
 
-class AppTest extends TestCase
+class ApplicationTest extends TestCase
 {
 
     public function testTimezone()
@@ -26,7 +26,8 @@ class AppTest extends TestCase
                 [
                     'timezone' => 'Europe/Copenhagen',
                     'debug' => true,
-                    'app-namespace' => 'awesome'],
+                    'app-namespace' => 'awesome'
+                ],
                 [],
                 $this->createMock(Router::class),
                 $this->createMock(BoxFactory::class),
