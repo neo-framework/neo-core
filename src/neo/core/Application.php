@@ -66,7 +66,9 @@ class Application
      */
     public function run()
     {
-        \error_reporting((bool)$this->config['debug'] ? -1 : 0);
+        \ini_set('display_errors', $this->config['debug'] ? 1 : 0);
+        \ini_set('display_startup_errors', $this->config['debug'] ? 1 : 0);
+
         \date_default_timezone_set($this->config['timezone']);
 
         // map all routes
@@ -90,30 +92,33 @@ class Application
                 $this->router->dispatch(
                         Request::createFromGlobals(),
                         new class(
-                                new MultiControllerFactory(...$this->controller_factories),
+                                (new MultiControllerFactory(...$this->controller_factories))->close(),
                                 $this->endobox,
-                                $this->logger)
-                            extends ControllerFactoryDecorator {
+                                $this->logger,
+                                $this->config['app-namespace']) extends ControllerFactoryDecorator {
 
                             private $endobox;
                             private $logger;
+                            private $namespace;
 
                             public function __construct(
                                     ControllerFactory $factory,
                                     BoxFactory $endobox,
-                                    Logger $logger) {
+                                    Logger $logger,
+                                    string $namespace) {
 
                                 parent::__construct($factory);
                                 $this->endobox = $endobox;
                                 $this->logger = $logger;
+                                $this->namespace = $namespace;
                             }
 
                             public function create(string $type) : ?Controller {
-                                return parent::create($type)
+                                return parent::create('\\' . $this->namespace . '\\controllers\\' . $type)
                                         ->setBoxFactory($this->endobox)
                                         ->setLogger($this->logger);
                             }
-
+                            
                         });
 
             } catch (\Klein\Exceptions\UnhandledException $e) {
@@ -122,6 +127,10 @@ class Application
                         \get_class($e), $e->getMessage(), $e->getTraceAsString()), $e->getCode(), $e);
             }
         } catch (\Exception $e) {
+            if ($this->config['catch-exceptions'] === false) {
+                throw $e;
+            }
+
             if ($this->config['debug'] === true) {
                 die(self::formatException($e));
             }
