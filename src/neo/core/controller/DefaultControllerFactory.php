@@ -28,8 +28,8 @@ class DefaultControllerFactory extends ControllerFactory
 
         $ref = new \ReflectionClass($type);
         $ctor = $ref->getConstructor();
-        if ($ctor && $ctor->getNumberOfParameters() === 0) {
-            return $type();
+        if ($ctor === null || $ctor->getNumberOfParameters() === 0) {
+            return new $type();
         }
 
         return $this->fallthrough($type);
