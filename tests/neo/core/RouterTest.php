@@ -87,4 +87,19 @@ class RouterTest extends TestCase
         ), $this->factory);
     }
 
+    public function testSeveralMapsRequest()
+    {
+        $this->router->map('GET', '/bar', 'barAction', 'BarController');
+        $this->router->map('GET', '/test', 'fooAction', 'BarController');
+
+        $this->expectOutputString("DEKMANTEL");
+
+        $server = $_SERVER;
+        $server['REQUEST_URI'] = '/test';
+        $server['REQUEST_METHOD'] = 'GET';
+        $this->router->dispatch(new Request(
+            [], [], [], $server
+        ), $this->factory);
+    }
+
 }

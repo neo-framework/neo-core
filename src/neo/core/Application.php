@@ -64,7 +64,7 @@ class Application
     /**
      * Entry point for Neo.
      */
-    public function run()
+    public function run(Request $request = null)
     {
         \ini_set('display_errors', $this->config['debug'] ? 1 : 0);
         \ini_set('display_startup_errors', $this->config['debug'] ? 1 : 0);
@@ -90,7 +90,7 @@ class Application
             try {
 
                 $this->router->dispatch(
-                        Request::createFromGlobals(),
+                        $request === null ? Request::createFromGlobals() : $request,
                         new class(
                                 (new MultiControllerFactory(...$this->controller_factories))->close(),
                                 $this->endobox,
@@ -118,7 +118,7 @@ class Application
                                         ->setBoxFactory($this->endobox)
                                         ->setLogger($this->logger);
                             }
-                            
+
                         });
 
             } catch (\Klein\Exceptions\UnhandledException $e) {

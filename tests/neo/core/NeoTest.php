@@ -14,6 +14,7 @@ namespace neo\core\tests;
 use \PHPUnit\Framework\TestCase;
 use \neo\core\Neo;
 use \neo\core\controller\DefaultControllerFactory;
+use \Klein\Request;
 
 class NeoTest extends TestCase
 {
@@ -22,9 +23,28 @@ class NeoTest extends TestCase
     {
         $this->expectOutputString("Hello");
 
+        $server = $_SERVER;
+        $server['REQUEST_URI'] = '/';
+        $server['REQUEST_METHOD'] = 'GET';
+        $request = new Request([], [], [], $server);
+
         Neo::create(__DIR__ . '/example')
                 ->registerControllerFactory(new DefaultControllerFactory())
-                ->run();
+                ->run($request);
+    }
+
+    public function testDifferentRoutes()
+    {
+        $this->expectOutputString("Hello");
+
+        $server = $_SERVER;
+        $server['REQUEST_URI'] = '/foo';
+        $server['REQUEST_METHOD'] = 'GET';
+        $request = new Request([], [], [], $server);
+
+        Neo::create(__DIR__ . '/example2')
+                ->registerControllerFactory(new DefaultControllerFactory())
+                ->run($request);
     }
 
 }
