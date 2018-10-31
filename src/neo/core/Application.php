@@ -152,6 +152,16 @@ class Application
         return $this;
     }
 
+    /**
+     * Set a psr-3 compliant logger.
+     */
+    public function setLogger(Logger $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
     private static function formatException(\Exception $e)
     {
         $format = <<<'EOT'
