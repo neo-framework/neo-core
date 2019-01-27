@@ -2,4 +2,3 @@
 /docs/
 *.phar
 .directory
-\composer.lock
