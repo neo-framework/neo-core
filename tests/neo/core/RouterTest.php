@@ -102,4 +102,11 @@ class RouterTest extends TestCase
         ), $this->factory);
     }
 
+    public function testInvalidHttpMethods()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->router->map('XET', '/foo', 'fooAction', 'FooController');
+    }
+
 }

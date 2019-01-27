@@ -17,7 +17,7 @@ use \Klein\Klein;
 use \Klein\Request;
 
 /**
- *
+ * A simple router.
  */
 class Router
 {
@@ -49,7 +49,12 @@ class Router
             $method = [(string)$method];
         }
 
-        // TODO assert whitelist methods
+        // whitelist http methods
+        \array_walk($method, function ($v) {
+            if (!\in_array($v, ['GET', 'POST', 'PUT', 'DELETE'])) {
+                throw new \InvalidArgumentException(\sprintf('Unknown http method: "%s"', $v));
+            }
+        });
 
         foreach ($method as $m) {
             $this->klein->respond($m, $route, function ($request, $response) use (&$proxy, $action, $controller) {
@@ -66,7 +71,7 @@ class Router
     }
 
     /**
-     *
+     * Dispatch request.
      */
     public function dispatch(Request $request, ControllerFactory $actual_factory)
     {
@@ -74,7 +79,7 @@ class Router
                 ->replace($actual_factory)
                 ->close();
 
-        return $this->klein->dispatch($request);
+        $this->klein->dispatch($request);
     }
 
 }
