@@ -13,8 +13,8 @@ namespace neo\core\controller;
 
 use \Klein\Request;
 use \Klein\Response;
-use \endobox\BoxFactory;
-use \endobox\Box;
+use \endobox\factory\BoxFactory;
+use \endobox\renderable\Box;
 use \Psr\Log\LoggerInterface as Logger;
 
 /**

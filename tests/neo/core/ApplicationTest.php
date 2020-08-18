@@ -14,7 +14,7 @@ namespace neo\core\tests;
 use \PHPUnit\Framework\TestCase;
 use \neo\core\Application;
 use \neo\core\router\Router;
-use \endobox\BoxFactory;
+use \endobox\factory\BoxFactory;
 use \Psr\Log\NullLogger;
 
 class ApplicationTest extends TestCase

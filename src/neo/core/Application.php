@@ -18,7 +18,7 @@ use \neo\core\controller\MultiControllerFactory;
 use \neo\core\controller\ControllerFactoryDecorator;
 use \Psr\Log\LoggerInterface as Logger;
 use \Klein\Request;
-use \endobox\BoxFactory;
+use \endobox\factory\BoxFactory;
 
 /**
  * Neo Application.
