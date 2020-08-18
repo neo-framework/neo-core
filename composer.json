@@ -23,7 +23,7 @@
     "require":
     {
         "php": "^7.1",
-        "younishd/endobox": "^4.0",
+        "younishd/endobox": "dev-master",
         "psr/log": "^1.0",
         "klein/klein": "dev-master"
     },
